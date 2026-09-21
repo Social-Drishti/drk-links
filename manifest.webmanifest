@@ -1,0 +1,23 @@
+{
+  "name": "Dr. Rajneesh Kant | Back to Nature Spine Clinic",
+  "short_name": "Back to Nature",
+  "description": "Book an appointment, message on WhatsApp, download the patient app, or find clinic details for Dr. Rajneesh Kant at Back to Nature Spine Clinic.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#f7f8fb",
+  "theme_color": "#0d1f6e",
+  "icons": [
+    {
+      "src": "assets/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "assets/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

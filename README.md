@@ -106,7 +106,26 @@ overwrite; no code changes needed.
 ## Files
 
 - `index.html` — the entire microsite (HTML + inline `<style>` + `<script>` config/render logic)
+- `manifest.webmanifest` — web app manifest powering "Add to Home Screen / Install app" on mobile
+- `sw.js` — minimal service worker (installability + offline cache; bump `CACHE` to "drk-v2" on changes)
 - `assets/drk-favicon.webp` — clinic logo, used as the site favicon
 - `assets/og-image.png` — social share preview image, 1200×630
 - `assets/avatar.jpg` — optional; drop the real profile photo here and point `profile.avatar.image` at it
+- `assets/icon-192.png`, `assets/icon-512.png` — PNG icons generated from the logo (Chrome install)
+- `assets/apple-touch-icon.png` — 180×180 PNG icon used by iOS "Add to Home Screen"
 - `README.md` — this file
+
+## Install as an app (PWA)
+
+The page ships a web app manifest, PNG icons and a service worker, so mobile
+visitors can add it to their home screen.
+
+- **Android (Chrome):** visiting from an HTTPS URL shows an "Add to
+  home screen / Install app" prompt once the service worker is active; it can
+  also be added from the browser menu.
+- **iOS (Safari):** Share → **Add to Home Screen**. No automatic prompt from
+  iOS; the `apple-touch-icon` defines the icon.
+- Service workers and install only work over **HTTPS** (`file://` / `http://`
+  won't install). All the supported static hosts in "Deploying" serve HTTPS.
+- To force a cache refresh after changing `index.html`/CSS/assets, bump `CACHE`
+  in `sw.js` (e.g. `"drk-v2"`).

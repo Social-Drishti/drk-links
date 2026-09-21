@@ -20,6 +20,16 @@
   <!-- Favicon: assets/drk-favicon.webp(clinic logo). Plain static file — swap the PNG to change it. -->
   <link rel="icon" type="image/png" href="assets/drk-favicon.webp">
 
+  <!-- Application manifest + home-screen (PWA) support. manifest.webmanifest
+       drives the mobile "Add to Home Screen / Install app" flow; the
+       apple-touch-icon is what iOS uses for the home-screen icon. -->
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Back to Nature Spine Clinic">
+
   <!-- Open Graph -->
   <meta property="og:title" content="Dr. Rajneesh Kant | Back to Nature Spine Clinic">
   <meta property="og:description"
@@ -584,6 +594,17 @@
 
       syncHeadMeta(CONFIG);
       auditPlaceholders(CONFIG);
+
+      // Installable-app support: register the service worker from sw.js so
+      // browsers offer "Add to Home Screen / Install" and the page caches
+      // offline. Guarded — fails silently on file://, http:// or old browsers.
+      if ("serviceWorker" in navigator) {
+        window.addEventListener("load", function () {
+          navigator.serviceWorker.register("sw.js").catch(function (err) {
+            console.warn("[pwa] service worker registration failed:", err);
+          });
+        });
+      }
     })();
   </script>
 
