@@ -1,0 +1,58 @@
+/* ================================================================
+   App card — dark navy Patient App card + Google Play badge
+================================================================ */
+.app-card {
+  background: linear-gradient(160deg, var(--navy) 0%, var(--navy-dark) 100%);
+  color: var(--white);
+  border-radius: var(--radius-lg);
+  padding: 22px 20px;
+  box-shadow: var(--shadow);
+}
+
+.app-mark {
+  width: 40px;
+  height: 40px;
+  border-radius: 11px;
+  background: var(--white-10);
+  color: var(--white);
+  display: grid;
+  place-items: center;
+  margin-bottom: 16px;
+}
+
+.app-mark svg {
+  width: 21px;
+  height: 21px;
+}
+
+.app-title {
+  font-size: 18px;
+  font-weight: 650;
+  margin: 0 0 6px;
+}
+
+.app-desc {
+  font-size: 13.5px;
+  line-height: 1.55;
+  color: var(--white-74);
+  margin: 0 0 18px;
+  max-width: 42ch;
+}
+
+.play-link {
+  display: inline-block;
+  border-radius: 12px;
+  transition: transform 120ms ease, filter 120ms ease;
+}
+
+.play-link:hover {
+  transform: translateY(-1px);
+  filter: brightness(0.96);
+}
+
+.play-badge {
+  width: 138px;
+  height: auto;
+  display: block;
+  border-radius: 11px;
+}

@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!--
+    Site-level metadata. The values below mirror CONFIG.site in the script at the
+    bottom and are refreshed from it on load. Keep both in sync when you change
+    the page title/description; the JS-sync guarantees the <title> and meta
+    <description> always match CONFIG.
+  -->
+  <title>Dr. Rajneesh Kant | Back to Nature Spine Clinic</title>
+  <meta name="description"
+    content="Book an appointment, message on WhatsApp, download the patient app, or find clinic details for Dr. Rajneesh Kant at Back to Nature Spine Clinic.">
+  <meta name="robots" content="index, follow">
+  <meta name="theme-color" content="#0d1f6e">
+
+  <!-- Favicon: assets/drk-favicon.webp(clinic logo). Plain static file — swap the PNG to change it. -->
+  <link rel="icon" type="image/png" href="assets/drk-favicon.webp">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Dr. Rajneesh Kant | Back to Nature Spine Clinic">
+  <meta property="og:description"
+    content="Spine & orthopaedic care focused on natural recovery and patient-first treatment. Book an appointment or get in touch.">
+  <meta property="og:type" content="profile">
+  <meta property="og:url" content="https://drrajneeshkant.com/">
+  <!-- og:image ships in assets/ as og-image.png; swap for an absolute URL once deployed so WhatsApp/Instagram previews resolve -->
+  <meta property="og:image" content="assets/og-image.png">
+  <meta property="og:site_name" content="Back to Nature Spine Clinic">
+  <meta property="og:locale" content="en_IN">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Dr. Rajneesh Kant | Back to Nature Spine Clinic">
+  <meta name="twitter:description"
+    content="Spine & orthopaedic care focused on natural recovery and patient-first treatment. Book an appointment or get in touch.">
+  <meta name="twitter:image" content="assets/og-image.png">
+
+  <!-- Styles — split by concern across css/. Load order matters here
+       (variables → base → layout → components → sections → responsive)
+       so the cascade and specificity behave predictably. -->
+  <link rel="stylesheet" href="css/variables.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/header.css">
+  <link rel="stylesheet" href="css/cta.css">
+  <link rel="stylesheet" href="css/links.css">
+  <link rel="stylesheet" href="css/app-card.css">
+  <link rel="stylesheet" href="css/clinic-info.css">
+  <link rel="stylesheet" href="css/social.css">
+  <link rel="stylesheet" href="css/footer.css">
+  <link rel="stylesheet" href="css/responsive.css">
+</head>
+
+<body>
+
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <div class="page">
+    <!-- Profile header (semantic landmark) -->
+    <header class="profile" id="profile-mount"></header>
+
+    <main id="main">
+      <!-- Primary CTAs -->
+      <div class="cta-group" id="cta-mount"></div>
+
+      <!-- Links list (buildLinks renders a <nav> landmark) -->
+      <div class="section" id="links-mount"></div>
+
+      <!-- Patient app card -->
+      <div class="section" id="app-mount"></div>
+
+      <!-- Clinic information card -->
+      <div class="section" id="clinic-mount"></div>
+
+      <!-- Social row (buildSocials renders a <nav> landmark) -->
+      <div class="section" id="socials-mount"></div>
+    </main>
+
+    <footer id="footer-mount"></footer>
+  </div>
+
+  <script>
+    (function () {
+      "use strict";
+
+      /* ====================================================================
+         CONFIG — single source of truth for all page content.
+         Edit this object to update the page; every section is rendered from
+         it. Anything without a final URL keeps `url: "#"` and `placeholder:
+         true`; on load the console lists every such link that still needs a
+         real address (see audit() at the bottom).
+      ==================================================================== */
+      const CONFIG = {
+        site: {
+          title: "Dr. Rajneesh Kant | Back to Nature Spine Clinic",
+          description: "Book an appointment, message on WhatsApp, download the patient app, or find clinic details for Dr. Rajneesh Kant at Back to Nature Spine Clinic.",
+          url: "https://drrajneeshkant.com/",        // used for og:url — set to the URL this page is deployed at
+          ogImage: "assets/og-image.png",           // ships in assets/; swap for an absolute URL once deployed
+          locale: "en_IN",
+        },
+
+        brand: {
+          themeColor: "#0d1f6e",
+        },
+
+        analytics: {
+          prefix: "rk",                            // data-analytics-id = prefix-kind-slug
+        },
+
+        profile: {
+          name: "Dr. Rajneesh Kant",
+          clinic: "Back to Nature Spine Clinic",
+          bio: "Spine & orthopaedic care focused on natural recovery and patient-first treatment.",
+          verified: true,                          // false hides the "Verified clinic profile" badge
+          avatar: {
+            initials: "RK",                        // fallback badge while no photo exists
+            image: "assets/drk-profile.webp",      // e.g. "photo.jpg" or a full URL to swap in an <img>
+            imageAlt: "Portrait of Dr. Rajneesh Kant",
+          },
+        },
+
+        contact: {
+          whatsapp: "919876543210",                // digits only, no "+" — drives the WhatsApp links
+          phoneDisplay: "+91 98765 43210",
+          phoneHref: "tel:+919876543210",
+        },
+
+        ctas: [
+          { label: "Book an Appointment", icon: "calendar", variant: "primary", url: "https://play.google.com/store/apps/details?id=com.rajneeshkant&pcampaignid=web_share" },
+          { label: "WhatsApp Us", icon: "whatsapp", variant: "outline", whatsapp: true }, // auto-builds a wa.me link
+        ],
+
+        links: [
+          { icon: "globe", title: "Visit Website", subtitle: "rajneeshkant.com", url: "https://drrajneeshkant.com/" },
+          { icon: "clinic", title: "Back to Nature Spine Clinic", subtitle: "About the clinic", url: "https://drrajneeshkant.com/" },
+          { icon: "pin", title: "Mumbai Clinic – Location", subtitle: "Get directions", url: "https://maps.app.goo.gl/ido1vCiN2uvDymin6" },
+          { icon: "pin", title: "Patna Clinic – Location", subtitle: "Get directions", url: "https://maps.app.goo.gl/tD3dJu1MKudXEjr16" },
+          { icon: "chat", title: "Call Mumbai Clinic", subtitle: "Contact the front desk", url: "tel:+919137352377" },
+          { icon: "chat", title: "Call Patna Clinic", subtitle: "Contact the front desk", url: "tel:+919308511357" },
+          // Social entries below reference CONFIG.socials by id so the URL is
+          // only ever declared in one place (the socials array).
+          { icon: "instagram", social: "instagram", title: "Instagram", subtitle: "Patient tips & clinic updates" },
+          { icon: "youtube", social: "youtube", title: "YouTube", subtitle: "Exercises & spine health videos" },
+          { icon: "facebook", social: "facebook", title: "Facebook", subtitle: "Follow the clinic page" },
+        ],
+
+        socials: [
+          { id: "instagram", label: "Instagram", url: "https://www.instagram.com/drrajneesh_kant/" },
+          { id: "youtube", label: "YouTube", url: "https://www.youtube.com/@drrajneeshkant" },
+          { id: "facebook", label: "Facebook", url: "https://www.facebook.com/doctorrajneeshkant" },
+          { id: "whatsapp", label: "WhatsApp", url: "#", placeholder: true }, // real wa.me link is auto-built (number TBD)
+        ],
+
+        app: {
+          title: "Back to Nature Patient App",
+          description: "Manage appointments, access patient services and stay connected with the clinic — anywhere, anytime.",
+          playUrl: "https://play.google.com/store/apps/details?id=com.rajneeshkant&pcampaignid=web_share",
+        },
+
+        clinic: {
+          name: "Back to Nature Spine Clinic",
+          hours: "Mon–Sat, 10:00 AM – 7:00 PM",
+          branches: [
+            {
+              label: "Mumbai Branch",
+              rows: [
+                { label: "Phone", icon: "phone", value: "+91 91373 52377", href: "tel:+919137352377" },
+              ],
+              maps: { label: "Get directions on Google Maps", url: "https://maps.app.goo.gl/ido1vCiN2uvDymin6" },
+            },
+            {
+              label: "Patna Branch",
+              rows: [
+                { label: "Phone", icon: "phone", value: "+91 93085 11357", href: "tel:+919308511357" },
+              ],
+              maps: { label: "Get directions on Google Maps", url: "https://maps.app.goo.gl/tD3dJu1MKudXEjr16" },
+            },
+          ],
+        },
+
+        footer: {
+          text: "© 2026 Dr. Rajneesh Kant | Back to Nature Spine Clinic",
+        },
+      };
+
+      /* ====================================================================
+         Inline SVG registry — shared by the links list and the social row so
+         Instagram/YouTube/Facebook render from the exact same icon in both.
+      ==================================================================== */
+      const ICONS = {
+        calendar:
+          '<path d="M3 4.5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2V20a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>' +
+          '<path d="M16 2.5v3M8 2.5v3M3 8.5h18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>' +
+          '<path d="M8.5 14h2M13.5 14h2" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>',
+        whatsapp:
+          '<path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/>',
+        globe:
+          '<circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.8"/>' +
+          '<path d="M3 12h18" fill="none" stroke="currentColor" stroke-width="1.8"/>' +
+          '<path d="M12 3c2.5 2.5 3.8 5.7 3.8 9s-1.3 6.5-3.8 9c-2.5-2.5-3.8-5.7-3.8-9S9.5 5.5 12 3Z" fill="none" stroke="currentColor" stroke-width="1.8"/>',
+        clinic:
+          '<path d="M4 21V9.2l8-6.2 8 6.2V21" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>' +
+          '<path d="M9.5 21v-5.5h5V21" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>',
+        pin:
+          '<path d="M12 21.5s-7.2-6.2-7.2-11a7.2 7.2 0 0 1 14.4 0c0 4.8-7.2 11-7.2 11Z" fill="currentColor"/>' +
+          '<circle cx="12" cy="10.2" r="2.6" fill="#fff"/>',
+        chat:
+          '<path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>',
+        phone:
+          '<path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.08 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>',
+        clock:
+          '<circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.8"/>' +
+          '<path d="M12 7v5l3.5 2" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>',
+        instagram:
+          '<rect x="3" y="3" width="18" height="18" rx="5" fill="none" stroke="currentColor" stroke-width="1.8"/>' +
+          '<circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="1.8"/>' +
+          '<circle cx="17.2" cy="6.8" r="1.1" fill="currentColor"/>',
+        youtube:
+          '<rect x="2.2" y="5.5" width="19.6" height="13" rx="3.5" fill="none" stroke="currentColor" stroke-width="1.8"/>' +
+          '<path d="m10.4 9.4 4.8 2.6-4.8 2.6V9.4Z" fill="currentColor"/>',
+        facebook:
+          '<path d="M13.5 22v-8h2.7l.4-3.2h-3.1V8.6c0-.9.3-1.6 1.7-1.6h1.5V4.2c-.3 0-1.2-.1-2.3-.1-2.3 0-3.9 1.4-3.9 4v2.7H7.8V14h2.7v8h3Z"/>',
+        chevron:
+          '<path d="m9 6 6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>',
+        check:
+          '<path d="m20 6-11 11-5-5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>',
+        smartphone:
+          '<rect x="6.5" y="2.5" width="11" height="19" rx="2.5" fill="none" stroke="currentColor" stroke-width="1.6"/>' +
+          '<path d="M10.5 17.5h3" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>',
+      };
+
+      /* ====================================================================
+         Google Play badge — inline SVG in Google's official badge style
+         (rounded black button, four-colour Play triangle, "GET IT ON" +
+         "Google Play"). No external images/PNG screenshots.
+      ==================================================================== */
+      const GOOGLE_PLAY_BADGE =
+        '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 135 40" aria-hidden="true" focusable="false">' +
+        '<rect width="135" height="40" rx="9" fill="#000"/>' +
+        '<g transform="translate(14 8) scale(0.084)">' +
+        '<path fill="#EA4335" d="M119.553141,134.916362 L1.0599006,259.060547 C3.75619448,268.616998 10.7182836,276.3906 19.9208658,280.119977 C29.1234481,283.849353 39.5331235,283.115716 48.121672,278.132484 L181.448642,202.197919 L119.553141,134.916362 Z"/>' +
+        '<path fill="#FBBC04" d="M239.370822,113.813616 L181.71353,80.7909097 L116.815965,137.741834 L181.978418,202.021326 L239.19423,169.351804 C249.525723,163.942452 256,153.24465 256,141.58271 C256,129.92077 249.525723,119.222968 239.19423,113.813616 L239.370822,113.813616 Z"/>' +
+        '<path fill="#4285F4" d="M1.0599006,23.4868015 C0.343633396,26.134699 -0.0127538816,28.8670014 -9.94374397e-15,31.6100341 L-9.94374397e-15,250.937314 C0.00751268399,253.679042 0.363556675,256.408712 1.0599006,259.060547 L123.614758,138.095018 L1.0599006,23.4868015 Z"/>' +
+        '<path fill="#34A853" d="M120.436101,141.273674 L181.71353,80.7909097 L48.5631521,4.50316009 C43.5539929,1.56944036 37.8568091,0.0156629668 32.0517989,0 C17.6444261,-0.0284873284 4.97836875,9.53420553 1.0599006,23.3985055 L120.436101,141.273674 Z"/>' +
+        '</g>' +
+        '<text x="46" y="17.4" font-family="Roboto,&quot;Segoe UI&quot;,Helvetica,Arial,sans-serif" font-size="7.6" letter-spacing="1.7" fill="#b8b8b8">GET IT ON</text>' +
+        '<text x="45" y="31.3" font-family="Roboto,&quot;Segoe UI&quot;,Helvetica,Arial,sans-serif" font-size="14.6" font-weight="600" fill="#ffffff">Google Play</text>' +
+        '</svg>';
+
+      /* ====================================================================
+         Small DOM/helpers
+      ==================================================================== */
+      const SVG_NS = "http://www.w3.org/2000/svg";
+
+      function el(tag, attrs, children) {
+        const node = document.createElement(tag);
+        for (const [key, value] of Object.entries(attrs || {})) {
+          if (value === null || value === undefined) continue;
+          if (key === "class") node.className = value;
+          else node.setAttribute(key, value);
+        }
+        if (children === null || children === undefined) children = [];
+        else if (!Array.isArray(children)) children = [children];
+        children.forEach(function (child) {
+          node.appendChild(typeof child === "string" ? document.createTextNode(child) : child);
+        });
+        return node;
+      }
+
+      function svgIcon(id) {
+        const svg = document.createElementNS(SVG_NS, "svg");
+        svg.setAttribute("viewBox", "0 0 24 24");
+        svg.setAttribute("aria-hidden", "true");
+        svg.setAttribute("focusable", "false");
+        svg.innerHTML = ICONS[id] || "";
+        return svg;
+      }
+
+      function slugify(str) {
+        return String(str || "").toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "");
+      }
+
+      function analyticsId(kind, name) {
+        return [CONFIG.analytics.prefix, kind, slugify(name)].filter(Boolean).join("-");
+      }
+
+      function isExternal(url) {
+        return /^https?:\/\//i.test(url);
+      }
+
+      function waUrl() {
+        return CONFIG.contact && CONFIG.contact.whatsapp ? "https://wa.me/" + CONFIG.contact.whatsapp : "#";
+      }
+
+      function ctaUrl(c) {
+        return c.whatsapp ? waUrl() : (c.url || "#");
+      }
+
+      function socialUrl(s) {
+        return s.id === "whatsapp" ? waUrl() : (s.url || "#");
+      }
+
+      function linkUrl(link) {
+        if (link.social) {
+          const s = CONFIG.socials.find(function (item) { return item.id === link.social; });
+          return s ? socialUrl(s) : "#";
+        }
+        return link.url || "#";
+      }
+
+      function applyHref(a, url, placeholder) {
+        a.href = url;
+        if (isExternal(url)) {
+          a.setAttribute("target", "_blank");
+          a.setAttribute("rel", "noopener");
+        }
+        // Placeholder links must not trigger a scroll jump to the top of the page.
+        if (placeholder) {
+          a.addEventListener("click", function (event) { event.preventDefault(); });
+        }
+      }
+
+      /* ====================================================================
+         Section builders
+      ==================================================================== */
+      function buildProfile(cfg) {
+        const header = el("header", { class: "profile" });
+
+        let avatar;
+        if (cfg.avatar.image) {
+          avatar = el("span", { class: "avatar" }, [
+            el("img", {
+              class: "avatar-img",
+              src: cfg.avatar.image,
+              alt: cfg.avatar.imageAlt,
+              width: "96",
+              height: "96",
+            }),
+          ]);
+        } else {
+          // Initials fallback — decorative because the real name is announced
+          // by the adjacent <h1>, so it is hidden from the accessibility tree.
+          avatar = el("span", { class: "avatar", "aria-hidden": "true" }, [
+            el("span", { class: "avatar-initials" }, cfg.avatar.initials),
+          ]);
+        }
+        header.appendChild(avatar);
+
+        header.appendChild(el("h1", { class: "profile-name" }, cfg.name));
+        header.appendChild(el("p", { class: "clinic-name" }, cfg.clinic));
+        header.appendChild(el("p", { class: "bio" }, cfg.bio));
+
+        if (cfg.verified) {
+          const badge = el("span", { class: "verified-badge" }, [
+            svgIcon("check"),
+            "Verified clinic profile",
+          ]);
+          header.appendChild(badge);
+        }
+
+        return header;
+      }
+
+      function buildCtas(cfg) {
+        const group = el("div", { class: "cta-group" });
+        cfg.forEach(function (c) {
+          const url = ctaUrl(c);
+          const a = el("a", {
+            class: "btn btn-" + c.variant,
+            "data-analytics-id": analyticsId("cta", c.label),
+            "aria-label": c.label,
+          }, [svgIcon(c.icon), el("span", {}, c.label)]);
+          applyHref(a, url, !!c.placeholder);
+          group.appendChild(a);
+        });
+        return group;
+      }
+
+      function buildLinks(cfg) {
+        const nav = el("nav", { "aria-label": "Useful links" });
+        nav.appendChild(el("p", { class: "section-label" }, "Links"));
+
+        const card = el("div", { class: "links-card" });
+        cfg.forEach(function (link) {
+          const url = linkUrl(link);
+          const a = el("a", {
+            class: "link-item",
+            "data-analytics-id": analyticsId("link", link.title),
+          }, [
+            el("span", { class: "link-icon", "aria-hidden": "true" }, [svgIcon(link.icon)]),
+            el("span", { class: "link-text" }, [
+              el("span", { class: "link-title" }, link.title),
+              el("span", { class: "link-sub" }, link.subtitle),
+            ]),
+            el("span", { class: "link-chevron", "aria-hidden": "true" }, [svgIcon("chevron")]),
+          ]);
+          applyHref(a, url, !!link.placeholder);
+          card.appendChild(a);
+        });
+        nav.appendChild(card);
+        return nav;
+      }
+
+      function buildApp(cfg) {
+        const section = el("section", { "aria-label": "Patient app" });
+        section.appendChild(el("p", { class: "section-label" }, "Patient App"));
+
+        const card = el("div", { class: "app-card" });
+        card.appendChild(el("span", { class: "app-mark", "aria-hidden": "true" }, [svgIcon("smartphone")]));
+        card.appendChild(el("h2", { class: "app-title" }, cfg.title));
+        card.appendChild(el("p", { class: "app-desc" }, cfg.description));
+
+        const link = el("a", {
+          class: "play-link",
+          href: cfg.playUrl,
+          "data-analytics-id": analyticsId("app", "google-play"),
+          "aria-label": "Download the " + cfg.title + " on Google Play",
+        });
+        if (isExternal(cfg.playUrl)) {
+          link.setAttribute("target", "_blank");
+          link.setAttribute("rel", "noopener");
+        }
+        link.insertAdjacentHTML("beforeend", GOOGLE_PLAY_BADGE);
+        card.appendChild(link);
+
+        section.appendChild(card);
+        return section;
+      }
+
+      function clinicRow(row) {
+        const value = row.href
+          ? el("a", { class: "info-value", href: row.href }, row.value)
+          : el("span", { class: "info-value" }, row.value);
+        return el("div", { class: "info-row" }, [
+          el("span", { class: "info-icon", "aria-hidden": "true" }, [svgIcon(row.icon)]),
+          el("span", { class: "info-text" }, [
+            el("span", { class: "info-label" }, row.label),
+            value,
+          ]),
+        ]);
+      }
+
+      function buildClinic(cfg) {
+        const section = el("section", { "aria-label": "Clinic information" });
+        section.appendChild(el("p", { class: "section-label" }, "Clinic Information"));
+
+        const card = el("div", { class: "clinic-card" });
+        card.appendChild(el("h2", { class: "clinic-head" }, [svgIcon("clinic"), cfg.name]));
+
+        if (cfg.hours) {
+          card.appendChild(clinicRow({ label: "Hours", icon: "clock", value: cfg.hours }));
+        }
+
+        cfg.branches.forEach(function (branch) {
+          const block = el("div", { class: "clinic-branch" });
+          block.appendChild(el("h3", { class: "branch-head" }, branch.label));
+
+          branch.rows.forEach(function (row) {
+            block.appendChild(clinicRow(row));
+          });
+
+          const maps = branch.maps;
+          const mapsBtn = el("a", {
+            class: "maps-btn",
+            href: maps.url,
+            "data-analytics-id": analyticsId("maps", branch.label),
+          }, [svgIcon("pin"), maps.label]);
+          applyHref(mapsBtn, maps.url, !!maps.placeholder);
+          block.appendChild(mapsBtn);
+
+          card.appendChild(block);
+        });
+
+        section.appendChild(card);
+        return section;
+      }
+
+      function buildSocials(cfg) {
+        const nav = el("nav", { "aria-label": "Follow on social media" });
+        const row = el("div", { class: "social-row" });
+        cfg.forEach(function (s) {
+          const url = socialUrl(s);
+          const isPlaceholder = s.id !== "whatsapp" && s.placeholder;
+          const btn = el("a", {
+            class: "social-btn",
+            "data-brand": s.id,
+            "data-analytics-id": analyticsId("social", s.id),
+            "aria-label": s.label,
+          }, [svgIcon(s.id)]);
+          applyHref(btn, url, isPlaceholder);
+          row.appendChild(btn);
+        });
+        nav.appendChild(row);
+        return nav;
+      }
+
+      function buildFooter(cfg) {
+        const footer = el("footer");
+        footer.appendChild(el("hr", { class: "divider", "aria-hidden": "true" }));
+        footer.appendChild(el("p", { class: "copyright" }, cfg.text));
+        return footer;
+      }
+
+      /* ====================================================================
+         Head metadata sync (config is the single source of truth at runtime).
+         Note: the favicon is not generated here — it is the static file
+         assets/drk-favicon.webp, so the clinic logo can be swapped freely.
+      ==================================================================== */
+      function syncHeadMeta(config) {
+        document.title = config.site.title;
+
+        const sets = [
+          ["name", "description", config.site.description],
+          ["name", "theme-color", config.brand.themeColor],
+          ["property", "og:title", config.site.title],
+          ["property", "og:description", config.site.description],
+          ["property", "og:url", config.site.url],
+          ["property", "og:image", config.site.ogImage],
+          ["property", "og:site_name", config.site.title],
+          ["property", "og:locale", config.site.locale],
+          ["name", "twitter:title", config.site.title],
+          ["name", "twitter:description", config.site.description],
+          ["name", "twitter:image", config.site.ogImage],
+        ];
+        sets.forEach(function (tuple) {
+          const selector = tuple[0] === "property" ? 'meta[property="' + tuple[1] + '"]' : 'meta[name="' + tuple[1] + '"]';
+          const meta = document.querySelector(selector);
+          if (meta) meta.setAttribute("content", tuple[2]);
+        });
+      }
+
+      /* ====================================================================
+         Placeholder audit — every link that still needs a real URL is
+         console.warn'd on load, so a "#" is never shipped silently.
+      ==================================================================== */
+      function auditPlaceholders(config) {
+        const pending = [];
+        function note(kind, label, url) {
+          if (url === "#" || url === "" || url === null || url === undefined) {
+            pending.push({ kind: kind, label: label, url: url || "#" });
+          }
+        }
+
+        config.ctas.forEach(function (c) { note("CTA", "“" + c.label + "”", ctaUrl(c)); });
+        // Links that reference CONFIG.socials resolve to the socials entry's
+        // URL, so they are audited in the socials pass below (single source).
+        config.links.forEach(function (l) { if (!l.social) note("link", l.title, linkUrl(l)); });
+        config.socials.forEach(function (s) { note("social", s.label, socialUrl(s)); });
+        note("app", "Google Play badge (" + config.app.title + ")", config.app.playUrl);
+        config.clinic.branches.forEach(function (b) {
+          note("maps", b.maps.label + " (" + b.label + ")", b.maps.url);
+        });
+
+        if (pending.length) {
+          const lines = pending.map(function (p) {
+            return "  - (" + p.kind + ") " + p.label + " -> " + p.url;
+          });
+          console.warn(
+            "[config] " + pending.length + " placeholder link(s) still need a real URL:\n" + lines.join("\n")
+          );
+        } else {
+          console.info("[config] All links configured — no placeholders remaining.");
+        }
+      }
+
+      /* ====================================================================
+         Init
+      ==================================================================== */
+      function mount(id, node) {
+        document.getElementById(id).appendChild(node);
+      }
+
+      mount("profile-mount", buildProfile(CONFIG.profile));
+      mount("cta-mount", buildCtas(CONFIG.ctas));
+      mount("links-mount", buildLinks(CONFIG.links));
+      mount("app-mount", buildApp(CONFIG.app));
+      mount("clinic-mount", buildClinic(CONFIG.clinic));
+      mount("socials-mount", buildSocials(CONFIG.socials));
+      mount("footer-mount", buildFooter(CONFIG.footer));
+
+      syncHeadMeta(CONFIG);
+      auditPlaceholders(CONFIG);
+    })();
+  </script>
+
+</body>
+
+</html>
