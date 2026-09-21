@@ -137,6 +137,8 @@
           whatsapp: "919876543210",                // digits only, no "+" — drives the WhatsApp links
           phoneDisplay: "+91 98765 43210",
           phoneHref: "tel:+919876543210",
+          tollFreeDisplay: "1800 571 8777",
+          tollFreeHref: "tel:18005718777",
         },
 
         ctas: [
@@ -151,6 +153,8 @@
           { icon: "pin", title: "Patna Clinic – Location", subtitle: "Get directions", url: "https://maps.app.goo.gl/tD3dJu1MKudXEjr16" },
           { icon: "chat", title: "Call Mumbai Clinic", subtitle: "Contact the front desk", url: "tel:+919137352377" },
           { icon: "chat", title: "Call Patna Clinic", subtitle: "Contact the front desk", url: "tel:+919308511357" },
+          { icon: "chat", title: "Call Lucknow Clinic", subtitle: "Contact the front desk", url: "tel:+919161620666" },
+          { icon: "phone", title: "Toll Free Helpline", subtitle: "1800 571 8777", url: "tel:18005718777" },
           // Social entries below reference CONFIG.socials by id so the URL is
           // only ever declared in one place (the socials array).
           { icon: "instagram", social: "instagram", title: "Instagram", subtitle: "Patient tips & clinic updates" },
@@ -188,6 +192,15 @@
                 { label: "Phone", icon: "phone", value: "+91 93085 11357", href: "tel:+919308511357" },
               ],
               maps: { label: "Get directions on Google Maps", url: "https://maps.app.goo.gl/tD3dJu1MKudXEjr16" },
+            },
+            {
+              label: "Lucknow Branch",
+              rows: [
+                { label: "Address", icon: "pin", value: "Add-1/324, Vikalp Khand, Gomti Nagar, Lucknow 226028" },
+                { label: "Phone", icon: "phone", value: "+91 91616 20666", href: "tel:+919161620666" },
+                { label: "Toll Free", icon: "phone", value: "1800 571 8777", href: "tel:18005718777" },
+              ],
+              maps: { url: "#", placeholder: true, label: "Get directions on Google Maps" },
             },
           ],
         },
