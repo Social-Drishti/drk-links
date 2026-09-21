@@ -200,7 +200,7 @@
                 { label: "Phone", icon: "phone", value: "+91 91616 20666", href: "tel:+919161620666" },
                 { label: "Toll Free", icon: "phone", value: "1800 571 8777", href: "tel:18005718777" },
               ],
-
+              maps: { label: "Get directions on Google Maps", url: "https://www.google.com/maps/search/?api=1&query=Add-1%2F324%20Vikalp%20Khand%20Gomti%20Nagar%20Lucknow%20226028" },
             },
           ],
         },
@@ -497,14 +497,15 @@
             block.appendChild(clinicRow(row));
           });
 
-          const maps = branch.maps;
-          const mapsBtn = el("a", {
-            class: "maps-btn",
-            href: maps.url,
-            "data-analytics-id": analyticsId("maps", branch.label),
-          }, [svgIcon("pin"), maps.label]);
-          applyHref(mapsBtn, maps.url, !!maps.placeholder);
-          block.appendChild(mapsBtn);
+          if (branch.maps) {
+            const mapsBtn = el("a", {
+              class: "maps-btn",
+              href: branch.maps.url,
+              "data-analytics-id": analyticsId("maps", branch.label),
+            }, [svgIcon("pin"), branch.maps.label]);
+            applyHref(mapsBtn, branch.maps.url, !!branch.maps.placeholder);
+            block.appendChild(mapsBtn);
+          }
 
           card.appendChild(block);
         });
@@ -586,7 +587,7 @@
         config.socials.forEach(function (s) { note("social", s.label, socialUrl(s)); });
         note("app", "Google Play badge (" + config.app.title + ")", config.app.playUrl);
         config.clinic.branches.forEach(function (b) {
-          note("maps", b.maps.label + " (" + b.label + ")", b.maps.url);
+          if (b.maps) note("maps", b.maps.label + " (" + b.label + ")", b.maps.url);
         });
 
         if (pending.length) {
