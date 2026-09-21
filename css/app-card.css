@@ -50,6 +50,10 @@
   filter: brightness(0.96);
 }
 
+.app-download {
+  margin-top: 14px;
+}
+
 .play-badge {
   width: 138px;
   height: auto;

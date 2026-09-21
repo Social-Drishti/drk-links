@@ -171,7 +171,7 @@
 
         app: {
           title: "Back to Nature Patient App",
-          description: "Manage appointments, access patient services and stay connected with the clinic — anywhere, anytime.",
+          description: "Manage appointments, access patient services and stay connected with the clinic anywhere, anytime.",
           playUrl: "https://play.google.com/store/apps/details?id=com.rajneeshkant&pcampaignid=web_share",
         },
 
@@ -200,13 +200,13 @@
                 { label: "Phone", icon: "phone", value: "+91 91616 20666", href: "tel:+919161620666" },
                 { label: "Toll Free", icon: "phone", value: "1800 571 8777", href: "tel:18005718777" },
               ],
-              maps: { url: "#", placeholder: true, label: "Get directions on Google Maps" },
+
             },
           ],
         },
 
         footer: {
-          text: "© 2026 Dr. Rajneesh Kant | Back to Nature Spine Clinic",
+          text: "© {year} Dr. Rajneesh Kant | Back to Nature Spine Clinic",
         },
       };
 
@@ -450,6 +450,17 @@
         link.insertAdjacentHTML("beforeend", GOOGLE_PLAY_BADGE);
         card.appendChild(link);
 
+        const download = el("a", {
+          class: "btn btn-primary app-download",
+          href: cfg.playUrl,
+          "data-analytics-id": analyticsId("app", "download"),
+        }, [svgIcon("smartphone"), el("span", {}, "Download App")]);
+        if (isExternal(cfg.playUrl)) {
+          download.setAttribute("target", "_blank");
+          download.setAttribute("rel", "noopener");
+        }
+        card.appendChild(download);
+
         section.appendChild(card);
         return section;
       }
@@ -524,7 +535,7 @@
       function buildFooter(cfg) {
         const footer = el("footer");
         footer.appendChild(el("hr", { class: "divider", "aria-hidden": "true" }));
-        footer.appendChild(el("p", { class: "copyright" }, cfg.text));
+        footer.appendChild(el("p", { class: "copyright" }, cfg.text.replace("© {year}", "© " + new Date().getFullYear())));
         return footer;
       }
 
