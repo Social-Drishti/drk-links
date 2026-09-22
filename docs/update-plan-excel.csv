@@ -1,0 +1,36 @@
+ID,Category,File,Task,Old Value,New Value,Status
+1,Content,index.html,CONFIG.contact.whatsapp,"919876543210 (placeholder)","919137352377 (Mumbai, social icon default)",Planned
+2,Content,index.html,Add WhatsApp CTA - Mumbai,+91 91373 52377 tel link,wa.me/919137352377 button,Planned
+3,Content,index.html,Add WhatsApp CTA - Patna,+91 93085 11357 tel link,wa.me/919741039910 button,Planned
+4,Content,index.html,"Add Address row - Mumbai Branch","No address row","Aston Building, Lokhandwala Complex, Andheri West, Mumbai, Maharashtra 400053",Planned
+5,Content,index.html,"Add Address row - Patna Branch","No address row","Near Beur More, Beside of Bank of Baroda and Behind of Pyari's Kitchen, Beur Jail Road, Patna - 800002",Planned
+6,Content,index.html,"Patna Branch phone","+91 93085 11357 (tel:+919308511357)","+91 97410 39910 (tel:+919741039910)",Planned
+7,Content,index.html,"Add WhatsApp row - Mumbai Branch","Phone row only","Phone (tel) + WhatsApp (wa.me/919137352377)",Planned
+8,Content,index.html,"Add WhatsApp row - Patna Branch","Phone row only","Phone (tel) + WhatsApp (wa.me/919741039910)",Planned
+9,Content,index.html,"Links list: Call Mumbai Clinic","Call Mumbai Clinic (tel:)",WhatsApp Mumbai Clinic (wa.me/919137352377),Planned
+10,Content,index.html,"Links list: Call Patna Clinic","Call Patna Clinic (tel:+919308511357)",WhatsApp Patna Clinic (wa.me/919741039910),Planned
+11,Content,index.html,"CONFIG.ctas structure","2 buttons: Book + WhatsApp Us","3 buttons: Book + WhatsApp Mumbai + WhatsApp Patna",Planned
+12,Content,index.html,JS ctaUrl() logic,"whatsapp: true only","supports whatsapp as digit string per CTA",Planned
+13,Content,index.html,"New Google Reviews section","Not present","Card: 4.8 rating, 5-star row (4 full + partial at 96%), Read all reviews link",Planned
+14,Content,index.html,"Google Reviews URL","n/a","https://www.google.com/search?q=dr+Rajneesh+kant#lrd=0x3be7b73d0ff983c9:0xccf5d3ec82864c0e,1,,,," ,Planned
+15,Content,index.html,"Reviews mount point","n/a","<div class=""section"" id=""reviews-mount""></div> after links section",Planned
+16,Content,index.html,"New JS renderer buildReviews()","Not present","Added renderer + star & Google G icons to ICONS",Planned
+17,Content,index.html,"Placeholder audit","links/ctas/maps only","add reviews URL audit",Planned
+18,Content,index.html,"profile.bio","Spine & orthopaedic care focused on natural recovery and patient-first treatment.","World Famous Physiotherapist, Osteopath and chiropractor ! Alternative medicine! No medication! No surgeries ! Complete Natural Care!",Planned
+19,Content,index.html,"og:description / twitter:description","Spine & orthopaedic care focused on natural recovery and patient-first treatment.",Same as bio text,Planned
+20,Design,css/variables.css,"Design tokens","navy/teal flat tokens","add vibrant gradient tokens (teal -> blue -> violet), brighter shadows",Planned
+21,Design,css/base.css,"Page background","flat #f7f8fb","gradient radial washes (teal/blue/violet tints)",Planned
+22,Design,css/header.css,"Profile header","flat avatar ring","gradient avatar ring + gradient title accent",Planned
+23,Design,css/cta.css,"CTA buttons","solid teal primary","gradient teal->blue with glow; outline gradient border",Planned
+24,Design,css/links.css,"Links card","flat white card","gradient accents + gradient icon chips",Planned
+25,Design,css/app-card.css,"App card","navy->navy-dark gradient","richer navy -> indigo -> teal gradient",Planned
+26,Design,css/clinic-info.css,"Clinic info card","flat white + teal tint","gradient branch cards + gradient maps/WhatsApp buttons",Planned
+27,Design,css/social.css,"Social buttons","flat brand hover colors","gradient brand hover fills",Planned
+28,Design,css/footer.css,"Footer","flat","minor gradient accent touch",Planned
+29,Design,css/responsive.css,"Desktop background","soft radial dots","larger layered gradient blobs",Planned
+30,Design,css/reviews.css,"New file","Not present","vibrant reviews card styling",Planned
+31,Load,index.html,"Stylesheet <link> order","variables..social,responsive","add css/reviews.css before responsive.css",Planned
+32,PWA,manifest.webmanifest,"theme_color","#0d1f6e","match new gradient theme",Planned
+33,PWA,manifest.webmanifest,"background_color","#f7f8fb","match new gradient theme",Planned
+34,PWA,sw.js,"CACHE version","drk-v3","drk-v4",Planned
+35,PWA,sw.js,"PRECACHE list","13 css entries","add ./css/reviews.css",Planned

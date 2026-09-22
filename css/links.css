@@ -2,11 +2,11 @@
    Links — the "Links" card and its link-item list styling
 ================================================================ */
 .links-card {
-  background: var(--white);
+  background: var(--surface);
   border: 1px solid var(--border);
   border-radius: var(--radius-lg);
   overflow: hidden;
-  box-shadow: var(--shadow-sm);
+  box-shadow: var(--shadow);
 }
 
 .link-item {
@@ -24,18 +24,19 @@
 }
 
 .link-item:hover {
-  background: var(--bg);
+  background: var(--teal-tint);
 }
 
 .link-icon {
   width: 40px;
   height: 40px;
   border-radius: 12px;
-  background: var(--teal-tint);
-  color: var(--teal-dark);
+  background: var(--teal);
+  color: var(--white);
   display: grid;
   place-items: center;
   flex-shrink: 0;
+  box-shadow: 0 6px 14px -6px var(--teal-30);
 }
 
 .link-icon svg {
@@ -52,7 +53,7 @@
   display: block;
   font-size: 15px;
   font-weight: 600;
-  color: var(--navy);
+  color: var(--text-primary);
 }
 
 .link-sub {

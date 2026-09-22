@@ -1,0 +1,110 @@
+---
+title: "Site Update Plan — Dr. Rajneesh Kant | Back to Nature Spine Clinic"
+date: "2026-09-22"
+type: "change-log"
+---
+
+# Update Plan — Link-in-Bio Microsite
+
+This document describes the planned changes for the static link-in-bio microsite
+(`index.html` + `css/*` + PWA files). All content is driven by the single
+`CONFIG` object inside `index.html`; styling lives in per-section CSS files.
+
+## 1. Content Updates (`index.html` — CONFIG)
+
+### Clinic addresses
+
+| Branch | Field | New value |
+| --- | --- | --- |
+| Mumbai | Address (new row) | Aston Building, Lokhandwala Complex, Andheri West, Mumbai, Maharashtra 400053 |
+| Patna | Address (new row) | Near Beur More, Beside of Bank of Baroda and Behind of Pyari's Kitchen, Beur Jail Road, Patna – 800002 |
+| Lucknow | unchanged | — |
+
+### WhatsApp numbers
+
+| Item | Location | Change |
+| --- | --- | --- |
+| Primary WhatsApp (social icon default) | `CONFIG.contact.whatsapp` | set to `919137352377` (Mumbai) |
+| CTA: WhatsApp Mumbai | `CONFIG.ctas` | new button → `wa.me/919137352377` |
+| CTA: WhatsApp Patna | `CONFIG.ctas` | new button → `wa.me/919741039910` |
+| Brunch call row (Patna) | `clinic.branches` | phone `+91 93085 11357` → `+91 97410 39910` (`tel:+919741039910`) |
+| Branch WhatsApp rows | `clinic.branches` (Mumbai & Patna) | add WhatsApp chat row (`wa.me` link), keeping the existing call row |
+| Links list | `CONFIG.links` | "Call Mumbai Clinic" / "Call Patna Clinic" → "WhatsApp Mumbai Clinic" / "WhatsApp Patna Clinic" |
+| Lucknow branch | `clinic.branches` | unchanged (phone + toll free kept) |
+
+Note: `ctaUrl()` updated so a CTA can carry its own WhatsApp digit string instead
+of only a boolean `true`.
+
+### Google Reviews (new section)
+
+| Item | Value |
+| --- | --- |
+| Rating displayed | 4.8 / 5 |
+| Review count | skipped for now |
+| Card contents | Google "G" mark + "Google Reviews" title, `4.8` score, 5-star row (4 full + partial star via CSS-clipped fill at 96%), "Read all reviews on Google" button |
+| Target URL | `https://www.google.com/search?q=dr+Rajneesh+kant#lrd=0x3be7b73d0ff983c9:0xccf5d3ec82864c0e,1,,,,` |
+| Mount point | new `<div class="section" id="reviews-mount"></div>` after the links section |
+| Renderer | new `buildReviews()` + `star` icon + Google "G" SVG in `ICONS` |
+| Audit | `reviews` added to `auditPlaceholders` |
+
+### Profile bio
+
+| Field | Value |
+| --- | --- |
+| `CONFIG.profile.bio` | World Famous Physiotherapist, Osteopath and chiropractor ! Alternative medicine! No medication! No surgeries ! Complete Natural Care! |
+| `og:description` / `twitter:description` | synced to the same text |
+
+## 2. Design Revamp — Vibrant Gradient Theme (`css/*`)
+
+| File | Change |
+| --- | --- |
+| `variables.css` | add vibrant gradient tokens (teal → blue → violet), brighter shadow/ring tokens |
+| `base.css` | gradient page background (teal/blue/violet radial washes) |
+| `header.css` | avatar gradient ring + gradient title accent |
+| `cta.css` | primary CTA → full teal→blue gradient with glow; outline button gradient border |
+| `links.css` | cards get gradient accent; link icons become gradient chips |
+| `app-card.css` | richer navy → indigo → teal gradient |
+| `clinic-info.css` | gradient branch cards + gradient maps / WhatsApp buttons |
+| `social.css` | gradient brand hover fills |
+| `footer.css` | minor accent touch |
+| `responsive.css` | larger layered gradient blobs on desktop |
+| `reviews.css` | **NEW** — vibrant reviews card styling |
+
+## 3. Supporting / PWA Files
+
+| File | Change |
+| --- | --- |
+| `index.html` | load `css/reviews.css` (before `responsive.css`) |
+| `manifest.webmanifest` | `background_color` / `theme_color` matched to new gradient theme |
+| `sw.js` | `CACHE` bumped `drk-v3` → `drk-v4`; add `./css/reviews.css` to `PRECACHE` |
+
+## 4. Files Touched — Summary
+
+| File | Section |
+| --- | --- |
+| `index.html` | content (CONFIG), new reviews mount + loader, JS renderer, head og/twitter desc |
+| `css/variables.css` | tokens |
+| `css/base.css` | page background |
+| `css/header.css` | profile header |
+| `css/cta.css` | CTA buttons |
+| `css/links.css` | links list |
+| `css/app-card.css` | patient app card |
+| `css/clinic-info.css` | clinic branch cards |
+| `css/social.css` | social row |
+| `css/footer.css` | footer |
+| `css/responsive.css` | desktop layout |
+| `css/reviews.css` | new reviews card |
+| `manifest.webmanifest` | PWA theme colors |
+| `sw.js` | service worker cache + precache |
+| `docs/updates-2026-09-22.mdx` | this document |
+
+## 5. Verification Steps
+
+1. Open `index.html` on a local server (or https host) and confirm:
+   - Both addresses show in the Mumbai & Patna branch cards.
+   - Patna phone reads `+91 97410 39910`; each branch has a call + WhatsApp row.
+   - Three CTAs at top: Book an Appointment, WhatsApp Mumbai, WhatsApp Patna.
+   - Google Reviews card shows `4.8` with the 4-full + partial star row and links to Google.
+   - Bio reads the new "World Famous Physiotherapist…" line.
+2. Run the placeholder audit — DevTools console should list no pending URLs.
+3. Force reload / bump cache (`drk-v4`) for installed-PWA users to pick up changes.

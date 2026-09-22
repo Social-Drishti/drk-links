@@ -15,7 +15,7 @@
   <meta name="description"
     content="Book an appointment, message on WhatsApp, download the patient app, or find clinic details for Dr. Rajneesh Kant at Back to Nature Spine Clinic.">
   <meta name="robots" content="index, follow">
-  <meta name="theme-color" content="#0d1f6e">
+  <meta name="theme-color" content="#f5f7fb">
 
   <!-- Favicon: assets/drk-favicon.webp(clinic logo). Plain static file — swap the PNG to change it. -->
   <link rel="icon" type="image/png" href="assets/drk-favicon.webp">
@@ -33,7 +33,7 @@
   <!-- Open Graph -->
   <meta property="og:title" content="Dr. Rajneesh Kant | Back to Nature Spine Clinic">
   <meta property="og:description"
-    content="Spine & orthopaedic care focused on natural recovery and patient-first treatment. Book an appointment or get in touch.">
+    content="World Famous Physiotherapist, Osteopath and chiropractor ! Alternative medicine! No medication! No surgeries ! Complete Natural Care!">
   <meta property="og:type" content="profile">
   <meta property="og:url" content="https://drrajneeshkant.com/">
   <!-- og:image ships in assets/ as og-image.png; swap for an absolute URL once deployed so WhatsApp/Instagram previews resolve -->
@@ -45,7 +45,7 @@
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Dr. Rajneesh Kant | Back to Nature Spine Clinic">
   <meta name="twitter:description"
-    content="Spine & orthopaedic care focused on natural recovery and patient-first treatment. Book an appointment or get in touch.">
+    content="World Famous Physiotherapist, Osteopath and chiropractor ! Alternative medicine! No medication! No surgeries ! Complete Natural Care!">
   <meta name="twitter:image" content="assets/og-image.png">
 
   <!-- Styles — split by concern across css/. Load order matters here
@@ -61,6 +61,7 @@
   <link rel="stylesheet" href="css/app-card.css">
   <link rel="stylesheet" href="css/clinic-info.css">
   <link rel="stylesheet" href="css/social.css">
+  <link rel="stylesheet" href="css/reviews.css">
   <link rel="stylesheet" href="css/footer.css">
   <link rel="stylesheet" href="css/responsive.css">
 </head>
@@ -79,6 +80,9 @@
 
       <!-- Links list (buildLinks renders a <nav> landmark) -->
       <div class="section" id="links-mount"></div>
+
+      <!-- Google Reviews card -->
+      <div class="section" id="reviews-mount"></div>
 
       <!-- Patient app card -->
       <div class="section" id="app-mount"></div>
@@ -114,7 +118,7 @@
         },
 
         brand: {
-          themeColor: "#0d1f6e",
+          themeColor: "#f5f7fb",
         },
 
         analytics: {
@@ -124,7 +128,7 @@
         profile: {
           name: "Dr. Rajneesh Kant",
           clinic: "Back to Nature Spine Clinic",
-          bio: "Spine & orthopaedic care focused on natural recovery and patient-first treatment.",
+          bio: "World Famous Physiotherapist, Osteopath and chiropractor ! Alternative medicine! No medication! No surgeries ! Complete Natural Care!",
           verified: true,                          // false hides the "Verified clinic profile" badge
           avatar: {
             initials: "RK",                        // fallback badge while no photo exists
@@ -134,25 +138,26 @@
         },
 
         contact: {
-          whatsapp: "919876543210",                // digits only, no "+" — drives the WhatsApp links
-          phoneDisplay: "+91 98765 43210",
-          phoneHref: "tel:+919876543210",
+          whatsapp: "919137352377",                // digits only, no "+" — default for the WhatsApp social icon
+          phoneDisplay: "+91 91373 52377",
+          phoneHref: "tel:+919137352377",
           tollFreeDisplay: "1800 571 8777",
           tollFreeHref: "tel:18005718777",
         },
 
         ctas: [
           { label: "Book an Appointment", icon: "calendar", variant: "primary", url: "https://play.google.com/store/apps/details?id=com.rajneeshkant&pcampaignid=web_share" },
-          { label: "WhatsApp Us", icon: "whatsapp", variant: "outline", whatsapp: true }, // auto-builds a wa.me link
+          { label: "WhatsApp Mumbai", icon: "whatsapp", variant: "outline", whatsapp: "919137352377" },
+          { label: "WhatsApp Patna", icon: "whatsapp", variant: "outline", whatsapp: "919741039910" },
         ],
 
         links: [
-          { icon: "globe", title: "Visit Website", subtitle: "rajneeshkant.com", url: "https://drrajneeshkant.com/" },
+          { icon: "globe", title: "Visit Website", subtitle: "rajneeshkant.com", url: "https://drrajneeshkant.in/" },
           { icon: "clinic", title: "Back to Nature Spine Clinic", subtitle: "About the clinic", url: "https://drrajneeshkant.com/" },
           { icon: "pin", title: "Mumbai Clinic – Location", subtitle: "Get directions", url: "https://maps.app.goo.gl/ido1vCiN2uvDymin6" },
           { icon: "pin", title: "Patna Clinic – Location", subtitle: "Get directions", url: "https://maps.app.goo.gl/tD3dJu1MKudXEjr16" },
-          { icon: "chat", title: "Call Mumbai Clinic", subtitle: "Contact the front desk", url: "tel:+919137352377" },
-          { icon: "chat", title: "Call Patna Clinic", subtitle: "Contact the front desk", url: "tel:+919308511357" },
+          { icon: "chat", title: "WhatsApp Mumbai Clinic", subtitle: "Chat with the front desk", url: "https://wa.me/919137352377" },
+          { icon: "chat", title: "WhatsApp Patna Clinic", subtitle: "Chat with the front desk", url: "https://wa.me/919741039910" },
           { icon: "chat", title: "Call Lucknow Clinic", subtitle: "Contact the front desk", url: "tel:+919161620666" },
           { icon: "phone", title: "Toll Free Helpline", subtitle: "1800 571 8777", url: "tel:18005718777" },
           // Social entries below reference CONFIG.socials by id so the URL is
@@ -166,13 +171,19 @@
           { id: "instagram", label: "Instagram", url: "https://www.instagram.com/drrajneesh_kant/" },
           { id: "youtube", label: "YouTube", url: "https://www.youtube.com/@drrajneeshkant" },
           { id: "facebook", label: "Facebook", url: "https://www.facebook.com/doctorrajneeshkant" },
-          { id: "whatsapp", label: "WhatsApp", url: "#", placeholder: true }, // real wa.me link is auto-built (number TBD)
+          { id: "whatsapp", label: "WhatsApp", url: "#", placeholder: true }, // real wa.me link is auto-built from CONFIG.contact.whatsapp
         ],
 
         app: {
           title: "Back to Nature Patient App",
           description: "Manage appointments, access patient services and stay connected with the clinic anywhere, anytime.",
           playUrl: "https://play.google.com/store/apps/details?id=com.rajneeshkant&pcampaignid=web_share",
+        },
+
+        reviews: {
+          label: "Google Reviews",
+          rating: 4.8,                              // displayed out of 5; drives the partial-star fill
+          url: "https://share.google/jN0hbOE3fWcPzmlas",
         },
 
         clinic: {
@@ -182,14 +193,18 @@
             {
               label: "Mumbai Branch",
               rows: [
+                { label: "Address", icon: "pin", value: "Aston Building, Lokhandwala Complex, Andheri West, Mumbai, Maharashtra 400053" },
                 { label: "Phone", icon: "phone", value: "+91 91373 52377", href: "tel:+919137352377" },
+                { label: "WhatsApp", icon: "whatsapp", value: "+91 91373 52377", href: "https://wa.me/919137352377" },
               ],
               maps: { label: "Get directions on Google Maps", url: "https://maps.app.goo.gl/ido1vCiN2uvDymin6" },
             },
             {
               label: "Patna Branch",
               rows: [
-                { label: "Phone", icon: "phone", value: "+91 93085 11357", href: "tel:+919308511357" },
+                { label: "Address", icon: "pin", value: "Near Beur More, Beside of Bank of Baroda and Behind of Pyari's Kitchen, Beur Jail Road, Patna – 800002" },
+                { label: "Phone", icon: "phone", value: "+91 97410 39910", href: "tel:+919741039910" },
+                { label: "WhatsApp", icon: "whatsapp", value: "+91 97410 39910", href: "https://wa.me/919741039910" },
               ],
               maps: { label: "Get directions on Google Maps", url: "https://maps.app.goo.gl/tD3dJu1MKudXEjr16" },
             },
@@ -253,6 +268,8 @@
         smartphone:
           '<rect x="6.5" y="2.5" width="11" height="19" rx="2.5" fill="none" stroke="currentColor" stroke-width="1.6"/>' +
           '<path d="M10.5 17.5h3" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>',
+        star:
+          '<path fill="currentColor" d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/>',
       };
 
       /* ====================================================================
@@ -274,6 +291,15 @@
         '</svg>';
 
       /* ====================================================================
+         Google "G" mark (multicolor) — used by the Google Reviews card.
+      ==================================================================== */
+      const GOOGLE_G =
+        '<path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/>' +
+        '<path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/>' +
+        '<path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/>' +
+        '<path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/>';
+
+      /* ====================================================================
          Small DOM/helpers
       ==================================================================== */
       const SVG_NS = "http://www.w3.org/2000/svg";
@@ -288,7 +314,10 @@
         if (children === null || children === undefined) children = [];
         else if (!Array.isArray(children)) children = [children];
         children.forEach(function (child) {
-          node.appendChild(typeof child === "string" ? document.createTextNode(child) : child);
+          if (typeof child === "string" || typeof child === "number") {
+            child = document.createTextNode(String(child));
+          }
+          node.appendChild(child);
         });
         return node;
       }
@@ -319,7 +348,10 @@
       }
 
       function ctaUrl(c) {
-        return c.whatsapp ? waUrl() : (c.url || "#");
+        if (c.whatsapp) {
+          return typeof c.whatsapp === "string" ? "https://wa.me/" + c.whatsapp : waUrl();
+        }
+        return c.url || "#";
       }
 
       function socialUrl(s) {
@@ -427,12 +459,60 @@
         return nav;
       }
 
+      function buildReviews(cfg) {
+        const section = el("section", { "aria-label": "Google reviews" });
+        section.appendChild(el("p", { class: "section-label" }, "Reviews"));
+
+        const card = el("a", {
+          class: "reviews-card",
+          href: cfg.url,
+          "data-analytics-id": analyticsId("reviews", "google"),
+          "aria-label": cfg.label + " — rated " + cfg.rating + " out of 5 stars",
+        });
+        applyHref(card, cfg.url, !!cfg.placeholder);
+
+        // Multicolor Google "G" mark
+        const g = document.createElementNS(SVG_NS, "svg");
+        g.setAttribute("viewBox", "0 0 48 48");
+        g.setAttribute("class", "g-mark");
+        g.setAttribute("aria-hidden", "true");
+        g.innerHTML = GOOGLE_G;
+        card.appendChild(g);
+
+        const head = el("div", { class: "reviews-head" }, [
+          el("span", { class: "reviews-title" }, cfg.label),
+          el("span", { class: "reviews-score" }, String(cfg.rating)),
+        ]);
+        card.appendChild(head);
+
+        // Star row — a full "bg" layer plus a clipped "fill" layer. The
+        // fill width (rating/5) clips the last star to match the score.
+        const stars = el("div", { class: "stars" });
+        const bg = el("div", { class: "stars-bg", "aria-hidden": "true" });
+        const fill = el("div", { class: "stars-fill", "aria-hidden": "true" });
+        fill.style.width = ((cfg.rating / 5) * 100).toFixed(2) + "%";
+        [bg, fill].forEach(function (layer) {
+          for (let i = 0; i < 5; i++) layer.appendChild(svgIcon("star"));
+        });
+        stars.appendChild(bg);
+        stars.appendChild(fill);
+        card.appendChild(stars);
+
+        card.appendChild(el("span", { class: "reviews-link" }, [
+          "Read all reviews on Google",
+          el("span", { class: "reviews-chevron", "aria-hidden": "true" }, [svgIcon("chevron")]),
+        ]));
+
+        section.appendChild(card);
+        return section;
+      }
+
       function buildApp(cfg) {
         const section = el("section", { "aria-label": "Patient app" });
         section.appendChild(el("p", { class: "section-label" }, "Patient App"));
 
         const card = el("div", { class: "app-card" });
-        card.appendChild(el("span", { class: "app-mark", "aria-hidden": "true" }, [svgIcon("smartphone")]));
+        // card.appendChild(el("span", { class: "app-mark", "aria-hidden": "true" }, [svgIcon("smartphone")]));
         card.appendChild(el("h2", { class: "app-title" }, cfg.title));
         card.appendChild(el("p", { class: "app-desc" }, cfg.description));
 
@@ -585,6 +665,7 @@
         config.links.forEach(function (l) { if (!l.social) note("link", l.title, linkUrl(l)); });
         config.socials.forEach(function (s) { note("social", s.label, socialUrl(s)); });
         note("app", "Google Play badge (" + config.app.title + ")", config.app.playUrl);
+        if (config.reviews) note("reviews", config.reviews.label, config.reviews.url);
         config.clinic.branches.forEach(function (b) {
           if (b.maps) note("maps", b.maps.label + " (" + b.label + ")", b.maps.url);
         });
@@ -611,6 +692,7 @@
       mount("profile-mount", buildProfile(CONFIG.profile));
       mount("cta-mount", buildCtas(CONFIG.ctas));
       mount("links-mount", buildLinks(CONFIG.links));
+      mount("reviews-mount", buildReviews(CONFIG.reviews));
       mount("app-mount", buildApp(CONFIG.app));
       mount("clinic-mount", buildClinic(CONFIG.clinic));
       mount("socials-mount", buildSocials(CONFIG.socials));

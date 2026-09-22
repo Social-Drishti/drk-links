@@ -1,0 +1,114 @@
+/* ================================================================
+   Reviews — Google Reviews card (G mark, 4.8 score, star row, link)
+   Rendered by buildReviews(); matches the vibrant gradient theme.
+   Color roles: gold = rating, teal = action.
+=============================================================== */
+.reviews-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 24px 18px 20px;
+  box-shadow: var(--shadow-sm);
+  transition: transform 140ms ease, box-shadow 140ms ease;
+}
+
+.reviews-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow);
+}
+
+.g-mark {
+  width: 34px;
+  height: 34px;
+}
+
+.reviews-head {
+  display: flex;
+  align-items: baseline;
+  gap: 9px;
+}
+
+.reviews-title {
+  font-size: 15px;
+  font-weight: 650;
+  color: var(--text-primary);
+}
+
+.reviews-score {
+  font-size: 26px;
+  font-weight: 750;
+  letter-spacing: -0.01em;
+  color: var(--teal);
+}
+
+.stars {
+  position: relative;
+  display: inline-flex;
+  width: 138px;              /* 5 × 26px stars + 4 × 2px gaps */
+  height: 26px;
+}
+
+.stars svg {
+  width: 26px;
+  height: 26px;
+  flex-shrink: 0;
+}
+
+.stars-bg {
+  display: inline-flex;
+  gap: 2px;
+  color: var(--star-empty);
+}
+
+.stars-fill {
+  position: absolute;
+  left: 0;
+  top: 0;
+  display: inline-flex;
+  gap: 2px;
+  overflow: hidden;
+  color: #f5b301;
+}
+
+.reviews-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  min-height: 48px;
+  margin-top: 14px;
+  padding: 12px 16px;
+  border-radius: var(--radius-md);
+  border: 1.5px solid var(--teal-30);
+  background: var(--teal-tint);
+  font-size: 15px;
+  font-weight: 650;
+  color: var(--teal);
+  transition: background-color 120ms ease, border-color 120ms ease, transform 140ms ease;
+}
+
+.reviews-link:hover {
+  background: var(--teal-tint-deep);
+  border-color: var(--teal);
+}
+
+.reviews-chevron {
+  width: 16px;
+  height: 16px;
+  display: inline-flex;
+  transition: transform 140ms ease;
+}
+
+.reviews-chevron svg {
+  width: 16px;
+  height: 16px;
+}
+
+.reviews-card:hover .reviews-chevron {
+  transform: translateX(4px);
+}

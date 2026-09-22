@@ -7,9 +7,10 @@
 @media (min-width: 620px) {
   body {
     background:
-      radial-gradient(620px 420px at 18% 4%, var(--teal-10), transparent 62%),
-      radial-gradient(520px 400px at 88% 96%, var(--navy-06), transparent 62%),
-      var(--bg);
+      radial-gradient(760px 520px at 14% -4%, var(--blue-15), transparent 62%),
+      radial-gradient(680px 480px at 90% 4%, var(--teal-10), transparent 60%),
+      radial-gradient(720px 520px at 50% 118%, var(--violet-20), transparent 64%),
+      linear-gradient(180deg, #f7f9fd 0%, #f3f6fb 60%, #f7f9fd 100%);
   }
 
   .page {

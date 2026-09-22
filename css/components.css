@@ -6,10 +6,11 @@
 /* Section heading label — reused by the links, app and clinic sections */
 .section-label {
   font-size: 13px;
-  font-weight: 650;
-  color: var(--navy-light);
+  font-weight: 700;
+  letter-spacing: 0.02em;
   margin: 0 0 10px;
   padding: 0 2px;
+  color: var(--teal);
 }
 
 /* Button primitive — every button on the page builds on this */

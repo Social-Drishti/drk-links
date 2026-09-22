@@ -1,28 +1,20 @@
 /* ================================================================
-   App card — dark navy Patient App card + Google Play badge
+   App card — clean light Patient App card + Google Play badge
 ================================================================ */
 .app-card {
-  background: linear-gradient(160deg, var(--navy) 0%, var(--navy-dark) 100%);
-  color: var(--white);
+  position: relative;
+  overflow: hidden;
+  background: var(--surface);
+  color: var(--text-primary);
+  border: 1px solid var(--border);
   border-radius: var(--radius-lg);
   padding: 22px 20px;
-  box-shadow: var(--shadow);
+  box-shadow: var(--shadow-sm);
 }
 
-.app-mark {
-  width: 40px;
-  height: 40px;
-  border-radius: 11px;
-  background: var(--white-10);
-  color: var(--white);
-  display: grid;
-  place-items: center;
-  margin-bottom: 16px;
-}
-
-.app-mark svg {
-  width: 21px;
-  height: 21px;
+.app-card > * {
+  position: relative;
+  z-index: 1;
 }
 
 .app-title {
@@ -34,7 +26,7 @@
 .app-desc {
   font-size: 13.5px;
   line-height: 1.55;
-  color: var(--white-74);
+  color: var(--text-secondary);
   margin: 0 0 18px;
   max-width: 42ch;
 }

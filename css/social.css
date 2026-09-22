@@ -12,11 +12,12 @@
   width: 50px;
   height: 50px;
   border-radius: 50%;
-  background: var(--white);
+  background: var(--surface);
   border: 1px solid var(--border);
-  color: var(--navy);
+  color: var(--text-primary);
   display: grid;
   place-items: center;
+  box-shadow: var(--shadow-sm);
   transition: color 120ms ease, background-color 120ms ease, border-color 120ms ease, transform 120ms ease;
 }
 
@@ -32,17 +33,17 @@
 }
 
 .social-btn[data-brand="instagram"]:hover {
-  background: var(--brand-instagram);
+  background: linear-gradient(135deg, #f58529 0%, #dd2a7b 55%, #8134af 100%);
 }
 
 .social-btn[data-brand="youtube"]:hover {
-  background: var(--brand-youtube);
+  background: linear-gradient(135deg, #ff5e3a 0%, #ff0000 100%);
 }
 
 .social-btn[data-brand="facebook"]:hover {
-  background: var(--brand-facebook);
+  background: linear-gradient(135deg, #1877f2 0%, #0a58ca 100%);
 }
 
 .social-btn[data-brand="whatsapp"]:hover {
-  background: var(--brand-whatsapp);
+  background: linear-gradient(135deg, #25d366 0%, #128c7e 100%);
 }

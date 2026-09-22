@@ -3,45 +3,67 @@
    Single source of truth for every color, radius, shadow and font on
    the page. Every other file references these custom properties —
    never hardcode a raw color value in the other css/ files.
+   Light, minimal theme.
 ================================================================ */
 :root {
-  /* Primary brand colors (from logo) */
-  --navy: #0d1f6e;
-  --navy-dark: #091654;
-  --navy-light: #1a2f8c;
+  /* Primary brand colors (from logo) — used as flat accents on the light theme */
+  --navy: #1e2a5a;
+  --navy-dark: #0a1128;
+  --navy-light: #7c8ff0;
   --white: #ffffff;
 
-  /* Accent for CTAs */
-  --teal: #14b8a6;
-  --teal-dark: #0f9488;
+  /* Accent for CTAs (darker teal for contrast on light surfaces) */
+  --teal: #0f9d8f;
 
-  /* Neutrals */
-  --bg: #f7f8fb;
-  --text-primary: #101828;
-  --text-secondary: #667085;
-  --border: #e4e7ec;
-  --success: #17b26a;
+  /* Neutrals — light theme */
+  --bg: #f5f7fb;
+  --surface: #ffffff;
+  --surface-2: #f3f5fa;
+  --text-primary: #1c2740;
+  --text-secondary: #5b6b84;
+  --border: #e5e9f2;
+  --success: #16a34a;
+  --star-empty: #d8dee9;
 
-  /* Derived tints (palette-based) */
-  --teal-tint: #e6f8f5;
-  --teal-tint-deep: #d0efe9;
-  --success-tint: #e8f6ef;
+  /* Derived tints (light-friendly alpha tints) */
+  --teal-tint: rgba(15, 157, 143, 0.08);
+  --teal-tint-deep: rgba(15, 157, 143, 0.16);
+  --success-tint: rgba(22, 163, 74, 0.1);
 
   /* Alpha tints of brand colors — keeps rgba() out of components */
-  --teal-10: rgba(20, 184, 166, 0.1);
-  --teal-30: rgba(20, 184, 166, 0.3);
-  --teal-45: rgba(20, 184, 166, 0.45);
-  --teal-60: rgba(20, 184, 166, 0.6);
-  --navy-06: rgba(13, 31, 110, 0.06);
-  --success-30: rgba(23, 178, 106, 0.3);
-  --white-10: rgba(255, 255, 255, 0.1);
-  --white-74: rgba(255, 255, 255, 0.74);
+  --teal-10: rgba(15, 157, 143, 0.09);
+  --teal-30: rgba(15, 157, 143, 0.24);
+  --teal-45: rgba(15, 157, 143, 0.34);
+  --teal-60: rgba(15, 157, 143, 0.5);
+  --navy-06: rgba(30, 42, 90, 0.06);
+  --success-30: rgba(22, 163, 74, 0.24);
+  --white-10: rgba(255, 255, 255, 0.12);
 
   /* Social brand colors (hover fills for the social row) */
   --brand-instagram: #e1306c;
   --brand-youtube: #ff0000;
   --brand-facebook: #1877f2;
   --brand-whatsapp: #25d366;
+
+  /* Vibrant accent palette — kept for primary action gradients */
+  --blue: #3b82f6;
+  --indigo: #818cf8;
+  --violet: #a78bfa;
+
+  /* Gradients — only used on primary CTAs (grad-cta). The flat card
+     look everywhere else comes from the neutrals above. */
+  --grad-primary: linear-gradient(135deg, #0f9d8f 0%, #0d9488 42%, #3b82f6 100%);
+  --grad-cta: linear-gradient(135deg, #0f9d8f 0%, #3b82f6 100%);
+  --grad-social-hover: linear-gradient(135deg, #0f9d8f 0%, #3b82f6 100%);
+
+  /* Alpha tints of the vibrant accents */
+  --blue-15: rgba(59, 130, 246, 0.1);
+  --blue-30: rgba(59, 130, 246, 0.22);
+  --violet-20: rgba(167, 139, 250, 0.12);
+
+  /* Vibrant shadows (soft, light-mode friendly) */
+  --shadow-glow: 0 14px 30px -12px rgba(59, 130, 246, 0.35);
+  --shadow-glow-teal: 0 14px 30px -12px rgba(15, 157, 143, 0.35);
 
   /* Typography */
   --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
@@ -50,8 +72,8 @@
   --radius-lg: 20px;
   --radius-md: 14px;
   --radius-sm: 10px;
-  --shadow: 0 1px 2px rgba(13, 31, 110, 0.05), 0 12px 30px -14px rgba(13, 31, 110, 0.22);
-  --shadow-sm: 0 1px 2px rgba(13, 31, 110, 0.06);
+  --shadow: 0 1px 2px rgba(16, 24, 40, 0.05), 0 14px 28px -14px rgba(16, 24, 40, 0.14);
+  --shadow-sm: 0 1px 3px rgba(16, 24, 40, 0.06);
   --maxw: 460px;
   --ring: 3px solid var(--teal-45);
 }

@@ -7,7 +7,7 @@
    network, and on failure return the cached start page. Bump CACHE to
    "drk-v2" (etc.) whenever the precache list changes to force a refresh.
 ==================================================================== */
-const CACHE = "drk-v3";
+const CACHE = "drk-v8";
 
 const PRECACHE = [
   "./",
@@ -23,6 +23,7 @@ const PRECACHE = [
   "./css/app-card.css",
   "./css/clinic-info.css",
   "./css/social.css",
+  "./css/reviews.css",
   "./css/footer.css",
   "./css/responsive.css",
   "./assets/drk-favicon.webp",
