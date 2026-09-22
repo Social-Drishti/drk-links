@@ -184,6 +184,11 @@
           label: "Google Reviews",
           rating: 4.8,                              // displayed out of 5; drives the partial-star fill
           url: "https://share.google/jN0hbOE3fWcPzmlas",
+          branches: [                               // per-city review rows (edit rating/url per branch)
+            { label: "Mumbai", rating: 4.9, url: "https://g.page/r/CQ5MhoLs0_XMEAE/review" },
+            { label: "Patna", rating: 4.8, url: "https://g.page/r/CYfw49FFeEqMEAE/review" },
+            { label: "Lucknow", rating: 4.7, url: "https://share.google/Wf759CR2L4EqRPVPm" },
+          ],
         },
 
         clinic: {
@@ -459,6 +464,21 @@
         return nav;
       }
 
+      function buildStars(rating) {
+        // Star row — a full "bg" layer plus a clipped "fill" layer. The
+        // fill width (rating/5) clips the last star to match the score.
+        const stars = el("div", { class: "stars" });
+        const bg = el("div", { class: "stars-bg", "aria-hidden": "true" });
+        const fill = el("div", { class: "stars-fill", "aria-hidden": "true" });
+        fill.style.width = ((rating / 5) * 100).toFixed(2) + "%";
+        [bg, fill].forEach(function (layer) {
+          for (let i = 0; i < 5; i++) layer.appendChild(svgIcon("star"));
+        });
+        stars.appendChild(bg);
+        stars.appendChild(fill);
+        return stars;
+      }
+
       function buildReviews(cfg) {
         const section = el("section", { "aria-label": "Google reviews" });
         section.appendChild(el("p", { class: "section-label" }, "Reviews"));
@@ -485,18 +505,7 @@
         ]);
         card.appendChild(head);
 
-        // Star row — a full "bg" layer plus a clipped "fill" layer. The
-        // fill width (rating/5) clips the last star to match the score.
-        const stars = el("div", { class: "stars" });
-        const bg = el("div", { class: "stars-bg", "aria-hidden": "true" });
-        const fill = el("div", { class: "stars-fill", "aria-hidden": "true" });
-        fill.style.width = ((cfg.rating / 5) * 100).toFixed(2) + "%";
-        [bg, fill].forEach(function (layer) {
-          for (let i = 0; i < 5; i++) layer.appendChild(svgIcon("star"));
-        });
-        stars.appendChild(bg);
-        stars.appendChild(fill);
-        card.appendChild(stars);
+        card.appendChild(buildStars(cfg.rating));
 
         card.appendChild(el("span", { class: "reviews-link" }, [
           "Read all reviews on Google",
@@ -504,6 +513,23 @@
         ]));
 
         section.appendChild(card);
+
+        // Per-city review rows (one each for Mumbai, Patna, Lucknow)
+        (cfg.branches || []).forEach(function (b) {
+          const url = b.url || cfg.url;
+          const row = el("a", {
+            class: "reviews-row",
+            href: url,
+            "data-analytics-id": analyticsId("reviews", b.label),
+            "aria-label": b.label + " Branch — rated " + b.rating + " out of 5 stars",
+          });
+          applyHref(row, url, false);
+          row.appendChild(el("span", { class: "reviews-row-name" }, b.label + " Branch"));
+          row.appendChild(buildStars(b.rating));
+          row.appendChild(el("span", { class: "reviews-row-score" }, String(b.rating)));
+          section.appendChild(row);
+        });
+
         return section;
       }
 

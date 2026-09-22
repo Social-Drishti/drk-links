@@ -112,3 +112,48 @@
 .reviews-card:hover .reviews-chevron {
   transform: translateX(4px);
 }
+
+/* Per-city review rows (Mumbai / Patna / Lucknow) */
+.reviews-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 10px;
+  padding: 14px 16px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+  text-decoration: none;
+  transition: transform 140ms ease, box-shadow 140ms ease, border-color 140ms ease;
+}
+
+.reviews-row:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow);
+  border-color: var(--teal);
+}
+
+.reviews-row-name {
+  flex: 1;
+  min-width: 0;
+  font-size: 14px;
+  font-weight: 650;
+  color: var(--text-primary);
+}
+
+.reviews-row .stars {
+  width: 110px;             /* 5 × 20px stars + 4 × 2px gaps */
+  height: 20px;
+}
+
+.reviews-row .stars svg {
+  width: 20px;
+  height: 20px;
+}
+
+.reviews-row-score {
+  font-size: 16px;
+  font-weight: 750;
+  color: var(--teal);
+}
