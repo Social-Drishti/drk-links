@@ -78,14 +78,17 @@
       <!-- Primary CTAs -->
       <div class="cta-group" id="cta-mount"></div>
 
+      <!-- WhatsApp links (rendered above the patient app card) -->
+      <div class="section" id="whatsapp-mount"></div>
+
+      <!-- Patient app card -->
+      <div class="section" id="app-mount"></div>
+
       <!-- Links list (buildLinks renders a <nav> landmark) -->
       <div class="section" id="links-mount"></div>
 
       <!-- Google Reviews card -->
       <div class="section" id="reviews-mount"></div>
-
-      <!-- Patient app card -->
-      <div class="section" id="app-mount"></div>
 
       <!-- Clinic information card -->
       <div class="section" id="clinic-mount"></div>
@@ -146,18 +149,21 @@
         },
 
         ctas: [
-          { label: "Book an Appointment", icon: "calendar", variant: "primary", url: "https://play.google.com/store/apps/details?id=com.rajneeshkant&pcampaignid=web_share" },
-          // { label: "WhatsApp", icon: "whatsapp", variant: "outline", whatsapp: "919137352377" },
-          // { label: "WhatsApp Patna", icon: "whatsapp", variant: "outline", whatsapp: "919741039910" },
+          { label: "Book an Appointment", icon: "calendar", variant: "primary", url: "https://drrajneeshkant.com/appointment" },
+          // { label: "WhatsApp Patna", icon: "whatsapp", variant: "outline", whatsapp: "919308511357" },
         ],
+
+        app: {
+          title: "Back to Nature Patient App",
+          description: "Manage appointments, access patient services and stay connected with the clinic anywhere, anytime.",
+          playUrl: "https://play.google.com/store/apps/details?id=com.rajneeshkant&pcampaignid=web_share",
+        },
 
         links: [
           { icon: "globe", title: "Visit Website", subtitle: "rajneeshkant.com", url: "https://drrajneeshkant.com/" },
           { icon: "clinic", title: "Back to Nature Spine Clinic", subtitle: "About the clinic", url: "https://drrajneeshkant.in/" },
           { icon: "pin", title: "Mumbai Clinic – Location", subtitle: "Get directions", url: "https://maps.app.goo.gl/ido1vCiN2uvDymin6" },
           { icon: "pin", title: "Patna Clinic – Location", subtitle: "Get directions", url: "https://maps.app.goo.gl/tD3dJu1MKudXEjr16" },
-          { icon: "chat", title: "WhatsApp Mumbai Clinic", subtitle: "Chat with the front desk", url: "https://wa.me/919137352377" },
-          { icon: "chat", title: "WhatsApp Patna Clinic", subtitle: "Chat with the front desk", url: "https://wa.me/919741039910" },
           { icon: "chat", title: "Call Lucknow Clinic", subtitle: "Contact the front desk", url: "tel:+919161620666" },
           { icon: "phone", title: "Toll Free Helpline", subtitle: "1800 571 8777", url: "tel:18005718777" },
           // Social entries below reference CONFIG.socials by id so the URL is
@@ -167,6 +173,13 @@
           { icon: "facebook", social: "facebook", title: "Facebook", subtitle: "Follow the clinic page" },
         ],
 
+        whatsappLinks: [
+          { icon: "whatsapp", title: "WhatsApp Mumbai Clinic", subtitle: "WhatsApp", url: "https://wa.me/919137352377" },
+          { icon: "whatsapp", title: "WhatsApp Patna Clinic", subtitle: "WhatsApp", url: "https://wa.me/919308511357" },
+          { icon: "whatsapp", title: "WhatsApp Lucknow Clinic", subtitle: "WhatsApp", url: "https://wa.me/919162620666" },
+          { icon: "whatsapp", title: "WhatsApp Gorakhpur Clinic", subtitle: "WhatsApp", url: "https://wa.me/917766916972" },
+        ],
+
         socials: [
           { id: "instagram", label: "Instagram", url: "https://www.instagram.com/drrajneesh_kant/" },
           { id: "youtube", label: "YouTube", url: "https://www.youtube.com/@drrajneeshkant" },
@@ -174,11 +187,6 @@
           { id: "whatsapp", label: "WhatsApp", url: "#", placeholder: true }, // real wa.me link is auto-built from CONFIG.contact.whatsapp
         ],
 
-        app: {
-          title: "Back to Nature Patient App",
-          description: "Manage appointments, access patient services and stay connected with the clinic anywhere, anytime.",
-          playUrl: "https://play.google.com/store/apps/details?id=com.rajneeshkant&pcampaignid=web_share",
-        },
 
         reviews: {
           label: "Google Reviews",
@@ -209,7 +217,7 @@
               rows: [
                 { label: "Address", icon: "pin", value: "Near Beur More, Beside of Bank of Baroda and Behind of Pyari's Kitchen, Beur Jail Road, Patna – 800002" },
                 { label: "Phone", icon: "phone", value: "+91 97410 39910", href: "tel:+919741039910" },
-                { label: "WhatsApp", icon: "whatsapp", value: "+91 97410 39910", href: "https://wa.me/919741039910" },
+                { label: "WhatsApp", icon: "whatsapp", value: "+91 93085 11357", href: "https://wa.me/919308511357" },
               ],
               maps: { label: "Get directions on Google Maps", url: "https://maps.app.goo.gl/tD3dJu1MKudXEjr16" },
             },
@@ -218,7 +226,14 @@
               rows: [
                 { label: "Address", icon: "pin", value: "Add-1/324, Vikalp Khand, Gomti Nagar, Lucknow 226028" },
                 { label: "Phone", icon: "phone", value: "+91 91616 20666", href: "tel:+919161620666" },
+                { label: "WhatsApp", icon: "whatsapp", value: "+91 91626 20666", href: "https://wa.me/919162620666" },
                 { label: "Toll Free", icon: "phone", value: "1800 571 8777", href: "tel:18005718777" },
+              ],
+            },
+            {
+              label: "Gorakhpur Branch",
+              rows: [
+                { label: "WhatsApp", icon: "whatsapp", value: "+91 77669 16972", href: "https://wa.me/917766916972" },
               ],
             },
           ],
@@ -442,6 +457,31 @@
       function buildLinks(cfg) {
         const nav = el("nav", { "aria-label": "Useful links" });
         nav.appendChild(el("p", { class: "section-label" }, "Links"));
+
+        const card = el("div", { class: "links-card" });
+        cfg.forEach(function (link) {
+          const url = linkUrl(link);
+          const a = el("a", {
+            class: "link-item",
+            "data-analytics-id": analyticsId("link", link.title),
+          }, [
+            el("span", { class: "link-icon", "aria-hidden": "true" }, [svgIcon(link.icon)]),
+            el("span", { class: "link-text" }, [
+              el("span", { class: "link-title" }, link.title),
+              el("span", { class: "link-sub" }, link.subtitle),
+            ]),
+            el("span", { class: "link-chevron", "aria-hidden": "true" }, [svgIcon("chevron")]),
+          ]);
+          applyHref(a, url, !!link.placeholder);
+          card.appendChild(a);
+        });
+        nav.appendChild(card);
+        return nav;
+      }
+
+      function buildWhatsApp(cfg) {
+        const nav = el("nav", { "aria-label": "WhatsApp" });
+        nav.appendChild(el("p", { class: "section-label" }, "WhatsApp"));
 
         const card = el("div", { class: "links-card" });
         cfg.forEach(function (link) {
@@ -717,6 +757,7 @@
 
       mount("profile-mount", buildProfile(CONFIG.profile));
       mount("cta-mount", buildCtas(CONFIG.ctas));
+      mount("whatsapp-mount", buildWhatsApp(CONFIG.whatsappLinks));
       mount("links-mount", buildLinks(CONFIG.links));
       mount("reviews-mount", buildReviews(CONFIG.reviews));
       mount("app-mount", buildApp(CONFIG.app));
