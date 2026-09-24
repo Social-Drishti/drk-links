@@ -16,4 +16,9 @@
   .page {
     padding: 52px 18px 64px;
   }
+
+  /* Banner bleeds to the top of the wider page, matching the new padding */
+  .profile-banner {
+    margin-top: -52px;
+  }
 }

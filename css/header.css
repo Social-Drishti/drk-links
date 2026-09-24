@@ -1,25 +1,44 @@
 /* ================================================================
-   Header — profile header: avatar, name, clinic, bio, verified badge
+   Header — profile header: banner, avatar, name, clinic, bio, badge
 ================================================================ */
 .profile {
   text-align: center;
 }
 
-.avatar {
-  width: 96px;
-  height: 96px;
-  border-radius: 50%;
-  margin: 4px auto 18px;
+/* LinkedIn-style cover banner on top of the profile card */
+.profile-banner {
+  width: calc(100% + 36px);
+  margin: -28px 0 0 -18px;
+  height: 160px;
+  border-radius: 0 0 var(--radius-lg) var(--radius-lg);
+  overflow: hidden;
   background: var(--surface-2);
-  border: 3px solid var(--surface);
+}
+
+.profile-banner-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.avatar {
+  width: 132px;
+  height: 132px;
+  border-radius: 50%;
+  margin: -68px auto 18px;
+  background: var(--surface-2);
+  border: 4px solid var(--surface);
   box-shadow:
-    0 0 0 4px var(--bg),
-    0 0 0 7px var(--teal-45),
+    0 0 0 6px var(--bg),
+    0 0 0 9px var(--teal-45),
     0 12px 26px -10px var(--blue-30);
   display: flex;
   align-items: center;
   justify-content: center;
   overflow: hidden;
+  position: relative;
+  z-index: 1;
 }
 
 .avatar img {
@@ -29,7 +48,7 @@
 }
 
 .avatar-initials {
-  font-size: 36px;
+  font-size: 48px;
   font-weight: 700;
   letter-spacing: 0.02em;
   color: var(--teal);

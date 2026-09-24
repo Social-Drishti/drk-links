@@ -133,9 +133,13 @@
           clinic: "Back to Nature Spine Clinic",
           bio: "World Famous Physiotherapist, Osteopath and chiropractor ! Alternative medicine! No medication! No surgeries ! Complete Natural Care!",
           verified: true,                          // false hides the "Verified clinic profile" badge
+          banner: {
+            image: "assets/banner.png",
+            alt: "Back to Nature Spine Clinic banner",
+          },
           avatar: {
             initials: "RK",                        // fallback badge while no photo exists
-            image: "assets/drk-profile.webp",      // e.g. "photo.jpg" or a full URL to swap in an <img>
+            image: "assets/drk-profile.png",      // e.g. "photo.jpg" or a full URL to swap in an <img>
             imageAlt: "Portrait of Dr. Rajneesh Kant",
           },
         },
@@ -191,11 +195,11 @@
         reviews: {
           label: "Google Reviews",
           rating: 4.8,                              // displayed out of 5; drives the partial-star fill
-          url: "https://share.google/jN0hbOE3fWcPzmlas",
+          url: "https://tinyurl.com/bdfbve7m",
           branches: [                               // per-city review rows (edit rating/url per branch)
             { label: "Mumbai", rating: 4.7, url: "https://g.page/r/CQ5MhoLs0_XMEAE/review" },
             { label: "Patna", rating: 3.9, url: "https://g.page/r/CYfw49FFeEqMEAE/review" },
-            // { label: "Lucknow", rating: 4.7, url: "https://share.google/Wf759CR2L4EqRPVPm" },
+            { label: "Lucknow", rating: 5.0, url: "https://tinyurl.com/2k2dnbe8" },
           ],
         },
 
@@ -229,12 +233,14 @@
                 { label: "WhatsApp", icon: "whatsapp", value: "+91 91626 20666", href: "https://wa.me/919162620666" },
                 { label: "Toll Free", icon: "phone", value: "1800 571 8777", href: "tel:18005718777" },
               ],
+              maps: { label: "Get directions on Google Maps", url: "https://maps.app.goo.gl/xQewkf2tJX48vJW48?g_st=aw" },
             },
             {
               label: "Gorakhpur Branch",
               rows: [
                 { label: "WhatsApp", icon: "whatsapp", value: "+91 77669 16972", href: "https://wa.me/917766916972" },
               ],
+              maps: { label: "Get directions on Google Maps", url: "https://maps.app.goo.gl/nnYW3SE4QsttQThM8" },
             },
           ],
         },
@@ -404,6 +410,18 @@
       function buildProfile(cfg) {
         const header = el("header", { class: "profile" });
 
+        if (cfg.banner && cfg.banner.image) {
+          header.appendChild(el("div", { class: "profile-banner" }, [
+            el("img", {
+              class: "profile-banner-img",
+              src: cfg.banner.image,
+              alt: cfg.banner.alt || "",
+              width: "920",
+              height: "320",
+            }),
+          ]));
+        }
+
         let avatar;
         if (cfg.avatar.image) {
           avatar = el("span", { class: "avatar" }, [
@@ -411,8 +429,8 @@
               class: "avatar-img",
               src: cfg.avatar.image,
               alt: cfg.avatar.imageAlt,
-              width: "96",
-              height: "96",
+              width: "132",
+              height: "132",
             }),
           ]);
         } else {
