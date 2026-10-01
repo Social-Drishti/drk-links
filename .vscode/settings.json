@@ -1,0 +1,23 @@
+{
+  "editor.formatOnSave": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "files.eol": "\n",
+
+  "files.associations": {
+    "*.webmanifest": "jsonc"
+  },
+
+  "json.schemas": {
+    "https://json.schemastore.org/webmanifest.json": [
+      "./public/manifest.webmanifest"
+    ]
+  },
+
+  "liveServer.settings.port": 1810,
+  "liveServer.settings.disableCache": true,
+
+  "files.exclude": {
+    "**/node_modules": true,
+    "**/dist": true
+  }
+}
