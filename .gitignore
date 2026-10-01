@@ -6,3 +6,6 @@ coverage/
 *.log
 .vscode/*
 !.vscode/settings.json
+.env.local
+node_modules/.env
+.env
